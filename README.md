@@ -18,4 +18,4 @@ npm run dev
 
 docker build -t my-next-app .
 
-docker run -p 3000:3000 --name my-running-app my-next-app
+docker run -d -p 3000:3000 --name my-running-app my-next-app
