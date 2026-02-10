@@ -19,9 +19,9 @@ export default function Header() {
                     {/* 2. Центральная часть (самовыравнивание по центру) */}
                     <div className="flex justify-between gap-20 text-2xl"> {/* Уменьшил gap-100 до gap-10, 100 — это слишком много для Tailwind */}
                         <Link href="/devices" className="hover:text-blue-500 transition-colors">Supported devices</Link>
-                        <Link href="/scan" className="hover:text-blue-500 transition-colors">Scan</Link>
-                        <Link href="/politics" className="hover:text-blue-500 transition-colors">Politics</Link>
-                        <Link href="/log" className="hover:text-blue-500 transition-colors">Log</Link>
+                        <Link href="/scan" className="hover:text-blue-500 transition-colors">Manual scan</Link>
+                        <Link href="/politics" className="hover:text-blue-500 transition-colors">Profiling policies</Link>
+                        <Link href="/log" className="hover:text-blue-500 transition-colors">Syslog</Link>
 
                     </div>
 

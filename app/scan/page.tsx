@@ -22,7 +22,7 @@ export default function ScanPage() {
         <main className="p-8 w-full max-w-[2000px] mx-auto">
             {/* 2. Привязываем инпут к состоянию */}
 
-            <h1 className="text-4xl font-bold mb-10 text-center font-space">Scan Configuration</h1>
+            <h1 className="text-4xl font-bold mb-10 text-center font-space">Manual scan</h1>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 min-h-[1000px]">
 
