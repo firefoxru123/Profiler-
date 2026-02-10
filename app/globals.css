@@ -1,26 +1,46 @@
-/* @import "tailwindcss";
+@import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f4f4f0;
+  --foreground: rgb(0, 0, 0);
+}
+
+.header-font {
+  font-family: 'Fugaz One Cyrillic', sans-serif;
+  letter-spacing: 0.5px;
+  /* можно еще добавить межбуквенный интервал */
+}
+
+[class="dark"] {
+  --background: #080c0e;
+  --foreground: #ffffff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  /* Теперь font-sans в Tailwind — это Inter */
+  --font-sans: var(--font-inter);
+  /* Теперь font-space — это твой кастомный класс для заголовков */
+  --font-space: var(--font-space-grotesk);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #374b5d;
+    --foreground: rgb(255, 255, 255);
   }
-}
+} */
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-} */
+  background: var(--background);
+  /* Применяем шрифт Geist Sans ко всему тексту на сайте */
+  font-family: var(--font-inter), sans-serif;
+  transition: background 0.3s ease;
+  /* Делаем текст более гладким */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
