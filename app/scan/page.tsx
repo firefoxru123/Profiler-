@@ -8,16 +8,31 @@ export default function ScanPage() {
     const [version, setVersion] = useState("v2c");
     const [community, setCommunity] = useState("public");
 
-    const handleRunScan = async () => {
-        // Теперь 'ip' будет браться из состояния выше
-        const payload = { ip, version, community };
-        console.log(payload)
-        await fetch('/api/scan', {
-            method: 'POST',
-            body: JSON.stringify(payload)
-        });
-    };
+    // 1. Создаем состояние для результата (массив строк или объект)
+    const [scanResult, setScanResult] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
+    const handleRunScan = async () => {
+        setScanResult(null);
+        setIsLoading(true);
+        const payload = { ip, version, community };
+
+        try {
+            const res = await fetch('/api/scan', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            // 2. Получаем данные, которые вернул Next-прокси от Rust
+            const data = await res.json();
+            setScanResult(data);
+        } catch (error) {
+            setScanResult({ error: "Ошибка соединения с сервером" });
+        } finally {
+            setIsLoading(false);
+        }
+    };
     return (
         <main className="p-8 w-full max-w-[2000px] mx-auto">
             {/* 2. Привязываем инпут к состоянию */}
@@ -121,9 +136,32 @@ export default function ScanPage() {
                     </button>
                 </section>
 
-                {/* ПРАВОЕ ОКНО: Оставляем как было */}
-                <section className="bg-[#05070a] border border-blue-500/20 rounded-3xl p-6 shadow-2xl">
-                    <p className="text-green-400 font-mono italic">{"// Console Output Ready..."}</p>
+                <section className="bg-[#05070a] border border-blue-500/20 rounded-3xl p-6 shadow-2xl overflow-y-auto max-h-[1000px]">
+                    <div className="flex items-center gap-2 mb-4 border-b border-white/5 pb-2">
+                        <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                        <span className="text-xs text-gray-500 ml-2 font-mono uppercase">System Console Output</span>
+                    </div>
+
+                    <div className="font-mono text-sm">
+                        {!scanResult && !isLoading && (
+                            <p className="text-gray-600 italic">{"// Waiting for scan to start..."}</p>
+                        )}
+
+                        {isLoading && (
+                            <p className="text-blue-400 animate-pulse">{"> Инициирую запрос к SNMP Manager..."}</p>
+                        )}
+
+                        {scanResult && (
+                            <div className="animate-in fade-in duration-500">
+                                <p className="text-yellow-500 mb-2">{`[RESPONSE FROM SMNP Manager]:`}</p>
+                                <pre className="text-green-400 whitespace-pre-wrap">
+                                    {JSON.stringify(scanResult, null, 2)}
+                                </pre>
+                            </div>
+                        )}
+                    </div>
                 </section>
             </div>
         </main>
