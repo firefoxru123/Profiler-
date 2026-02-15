@@ -43,14 +43,12 @@ export default function RootLayout({
     <html lang="ru" suppressHydrationWarning>
 
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${spaceGrotesk.variable} ${inter.variable} antialiased`}
       ><ThemeProvider>
-          <Header />
           <main>
             {children}
           </main>
         </ThemeProvider>
-
       </body>
     </html>
   );
