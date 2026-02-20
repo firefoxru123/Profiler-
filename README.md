@@ -21,15 +21,15 @@
 ## 🚀 Быстрый старт
 
 ### 1. Клонирование репозитория
-```bash git clone https://github.com
+```bash
+git clone https://github.com
 cd profiler
 
 1. Установите зависимости:
-   ```bash
    npm install
 
-npm run dev
+   npm run dev
 
-docker build -t my-next-app .
+   docker build -t my-next-app .
 
-docker run -d -p 3000:3000 --name my-running-app my-next-app
+   docker run -d -p 3000:3000 --name my-running-app my-next-app
