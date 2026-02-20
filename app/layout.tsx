@@ -44,7 +44,8 @@ export default function RootLayout({
 
       <body
         className={`${spaceGrotesk.variable} ${inter.variable} antialiased`}
-      ><ThemeProvider>
+      >
+        <ThemeProvider>
           <main>
             {children}
           </main>

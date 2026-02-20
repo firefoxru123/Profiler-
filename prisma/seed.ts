@@ -1,20 +1,27 @@
 import { PrismaClient } from '../app/generated/prisma';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { Pool } from 'pg';
 
-// В Prisma 7 + prisma.config.ts URL подхватится автоматически
-const prisma = new PrismaClient();
+const connectionString = process.env.DATABASE_URL;
+const pool = new Pool({ connectionString });
+const adapter = new PrismaPg(pool);
+
+// Передаем адаптер - это официальный путь Prisma 7
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  console.log('🚀 Запуск сида...');
-  const admin = await prisma.user.upsert({
-    where: { email: 'admin@admin.com' },
-    update: {},
-    create: {
-      email: 'admin@admin.com',
-      name: 'Default Admin',
-      password: 'admin_password_123',
+  console.log('🚀 Запуск сида через адаптер...');
+  
+  await prisma.user.deleteMany({});
+
+  const admin = await prisma.user.create({
+    data: {
+      name: 'admin',
+      password: 'admin',
     },
   });
-  console.log('✅ Готово! Пользователь создан:', admin);
+
+  console.log('✅ Успех! Пользователь создан:', admin);
 }
 
 main()
@@ -24,4 +31,5 @@ main()
   })
   .finally(async () => {
     await prisma.$disconnect();
+    await pool.end();
   });
